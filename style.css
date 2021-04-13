@@ -25,39 +25,77 @@ td {
     padding: 0;
 }
 
-.path-cell {
-    opacity: 0.2;
+.grass{
+    background-color: #658b60;
+    text-align: center;
+}
+
+.bread{
+    background-color: #8b8860;
+    text-align: center;
+}
+
+.karegar-0 {
+    opacity: 1.0;
+    background-color: #ff0000;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    text-align: center;
+}
+
+.karegar-1 {
+    opacity: 1.0;
+    background-color: #0000ff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    text-align: center;
+}
+
+.sarbaz-0 {
+    opacity: 1.0;
+    background-color: #ff0055;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    text-align: center;
+}
+
+.sarbaz-1 {
+    opacity: 1.0;
+    background-color: #5500ff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    text-align: center;
+}
+
+.cell {
+    opacity: 1.0;
     position: absolute;
     top: 0;
     left: 0;
 }
 
-.path-0 {
-    background-color: #607D8B;
+.wall {
+    background-color: #607D8B88;
 }
 
-.path-1 {
-    background-color: #8BC34A;
+.base-0 {
+    background-color: #ff000088;
 }
 
-.path-2 {
-    background-color: #795548;
-}
-
-.path-3 {
-    background-color: #FF5722;
-}
-
-.path-4 {
-    background-color: #009688;
-}
-
-.path-5 {
-    background-color: #673AB7;
-}
-
-.path-6 {
-    background-color: #E91E63;
+.base-1 {
+    background-color: #0000ff88;
 }
 
 td>div {
