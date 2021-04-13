@@ -311,17 +311,17 @@ function viewTurn(turnIndex) {
   }
 
   // <svg width="500" height="500"><line x1="50" y1="50" x2="350" y2="350" stroke="black"/></svg>
-  const line_cont = document.createElement("line");
-  line.setAttribute("x1","50");
-  line.setAttribute("y1","50");
-  line.setAttribute("x2","350");
-  line.setAttribute("y2","350");
-  line.setAttribute("stroke","black");
-  const line_cont = document.createElement("svg");
-  line_cont.setAttribute("width", pathTable.Width);
-  line_cont.setAttribute("width", pathTable.Height);
-  line_cont.appendChild(line_cont);
-  graphic_positioned.appendChild(line_cont);
+  // const line_cont = document.createElement("line");
+  // line.setAttribute("x1","50");
+  // line.setAttribute("y1","50");
+  // line.setAttribute("x2","350");
+  // line.setAttribute("y2","350");
+  // line.setAttribute("stroke","black");
+  // const line_cont = document.createElement("svg");
+  // line_cont.setAttribute("width", pathTable.Width);
+  // line_cont.setAttribute("width", pathTable.Height);
+  // line_cont.appendChild(line_cont);
+  // graphic_positioned.appendChild(line_cont);
 
 }
 
