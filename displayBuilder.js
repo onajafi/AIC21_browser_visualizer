@@ -3,12 +3,15 @@ let pathTable;
 let graphic_positioned;
 let cellLocationLabel;
 let map;
+let svg_cont;
 
 window.onload = () => {
   pathTable = document.getElementById("path-table");
   graphic_positioned = document.querySelector("div.positioned");
   mainTable = document.getElementById("main-table");
   cellLocationLabel = document.getElementById("cell-location");
+  // svg_cont = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg_cont = document.getElementById("action-disp");
 };
 
 let graphicLog;
@@ -230,6 +233,7 @@ function viewTurn(turnIndex) {
       cell.innerHTML = "";
       if (map[i][j]) {
         const tile = document.createElement("div");
+        tile.setAttribute("id", "c"+i+'_'+j);
 
         if(map[i][j]["type"] == 0){//Base 0
           tile.className = `cell base-0`;
@@ -252,7 +256,6 @@ function viewTurn(turnIndex) {
 
         if(map[i][j]["type"] != 3){//ٔNot a Wall
           if(map[i][j]["ants"].length > 0){
-            const ant_tile = document.createElement("div");
             let kargar_0_cnt = 0;
             let kargar_1_cnt = 0;
             let sarbaz_0_cnt = 0;
@@ -275,22 +278,29 @@ function viewTurn(turnIndex) {
             }
             
             if(kargar_0_cnt){
+              let ant_tile = document.createElement("div");
               ant_tile.className = `karegar-0`;
               ant_tile.innerText=kargar_0_cnt;
+              tile.appendChild(ant_tile);
             }
             if(kargar_1_cnt){
+              let ant_tile = document.createElement("div");
               ant_tile.className = `karegar-1`;
               ant_tile.innerText=kargar_1_cnt;
+              tile.appendChild(ant_tile);
             }
             if(sarbaz_0_cnt){
+              let ant_tile = document.createElement("div");
               ant_tile.className = `sarbaz-0`;
               ant_tile.innerText=sarbaz_0_cnt;
+              tile.appendChild(ant_tile);
             }
             if(sarbaz_1_cnt){
+              let ant_tile = document.createElement("div");
               ant_tile.className = `sarbaz-1`;
               ant_tile.innerText=sarbaz_1_cnt;
+              tile.appendChild(ant_tile);
             }
-            tile.appendChild(ant_tile);
           }
         }
         // const ant_tile_1 = document.createElement("div");
@@ -310,30 +320,57 @@ function viewTurn(turnIndex) {
     row = row.nextSibling;
   }
 
-  // <svg width="500" height="500"><line x1="50" y1="50" x2="350" y2="350" stroke="black"/></svg>
-  // const line_cont = document.createElement("line");
-  // line.setAttribute("x1","50");
-  // line.setAttribute("y1","50");
-  // line.setAttribute("x2","350");
-  // line.setAttribute("y2","350");
-  // line.setAttribute("stroke","black");
-  // const line_cont = document.createElement("svg");
-  // line_cont.setAttribute("width", pathTable.Width);
-  // line_cont.setAttribute("width", pathTable.Height);
-  // line_cont.appendChild(line_cont);
-  // graphic_positioned.appendChild(line_cont);
+
+
+  //Building the action display part:
+  svg_cont.innerHTML="";
+  svg_cont.setAttributeNS(null, "width", pathTable.offsetWidth);
+  svg_cont.setAttributeNS(null, "height", pathTable.offsetHeight);
+
+  function getNode(n, v) {
+    n = document.createElementNS("http://www.w3.org/2000/svg", n);
+    for (var p in v)
+      n.setAttributeNS(null, p.replace(/[A-Z]/g, function(m, p, o, s) { return "-" + m.toLowerCase(); }), v[p]);
+    return n
+  }
+
+  let offset_x = pathTable.getBoundingClientRect().left - (document.getElementById("c0_0").offsetWidth)/2;
+  let offset_y = pathTable.getBoundingClientRect().top - (document.getElementById("c0_0").offsetHeight)/2;
+
+  turn["attacks"].forEach(element => {
+    // "attacker_id",
+    // "defender_id",
+    // "src_row",
+    // "src_col",
+    // "dst_row",
+    // "dst_col"
+    line_cont = getNode("line", {
+      x1: document.getElementById("c"+element["src_row"]+"_"+element["src_col"]).getBoundingClientRect().left - offset_x, 
+      y1: document.getElementById("c"+element["src_row"]+"_"+element["src_col"]).getBoundingClientRect().top - offset_y, 
+      x2: document.getElementById("c"+element["dst_row"]+"_"+element["dst_col"]).getBoundingClientRect().left - offset_x, 
+      y2: document.getElementById("c"+element["dst_row"]+"_"+element["dst_col"]).getBoundingClientRect().top - offset_y, 
+      "stroke":"black"});
+    svg_cont.appendChild(line_cont);
+    // let line_cont = getNode("line", {x1:src_cell., y1:"50", x2:"350", y2:"350", "stroke":"black"});
+  });
+  
+
 
 }
 
 let currentTurnIndex = -1;
 let currentTurn = undefined;
 function showNextTurn() {
+  if(currentTurnIndex + 1 >= graphicLog.turns.length)
+    return;
   viewTurn(++currentTurnIndex);
   currentTurn = graphicLog.turns[currentTurnIndex];
   document.getElementById("turn-num").innerText = currentTurn.turn_num;
 }
 
 function showPreviousTurn() {
+  if(currentTurnIndex - 1 < 0)
+    return;
   viewTurn(--currentTurnIndex);
   currentTurn = graphicLog.turns[currentTurnIndex];
   document.getElementById("turn-num").innerText = currentTurn.turn_num;
