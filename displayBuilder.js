@@ -237,8 +237,10 @@ function viewTurn(turnIndex) {
 
         if(map[i][j]["type"] == 0){//Base 0
           tile.className = `cell base-0`;
+          tile.innerText=turn.base0_health;
         }else if(map[i][j]["type"] == 1){//Base 1
           tile.className = `cell base-1`;
+          tile.innerText=turn.base1_health;
         }else if(map[i][j]["type"] == 2){//Empty
           
           if(map[i][j]["resource_type"]==0){
@@ -358,6 +360,14 @@ function viewTurn(turnIndex) {
 
 }
 
+function update_winner_stat(){
+  if(graphicLog.stats["winner"]==1){
+    document.getElementById("winner-color").innerText = "Winner is Blue";
+  } else {
+    document.getElementById("winner-color").innerText = "Winner is Red";
+  }
+}
+
 let currentTurnIndex = -1;
 let currentTurn = undefined;
 function showNextTurn() {
@@ -366,6 +376,7 @@ function showNextTurn() {
   viewTurn(++currentTurnIndex);
   currentTurn = graphicLog.turns[currentTurnIndex];
   document.getElementById("turn-num").innerText = currentTurn.turn_num;
+  update_winner_stat();
 }
 
 function showPreviousTurn() {
@@ -374,9 +385,11 @@ function showPreviousTurn() {
   viewTurn(--currentTurnIndex);
   currentTurn = graphicLog.turns[currentTurnIndex];
   document.getElementById("turn-num").innerText = currentTurn.turn_num;
+  update_winner_stat();
 }
 
 function handleFiles(files) {
+  currentTurnIndex=-1;
   const reader = new FileReader();
   reader.onload = function (e) {
     loadLog(JSON.parse(e.target.result));
